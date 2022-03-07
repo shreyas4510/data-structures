@@ -6,27 +6,50 @@ int main() {
 	operations *op = new operations();
 	Node *head = op -> takeInput();
 
-	int n, i=0;
-	cin >> n;
+	int x, i=1;
+	cin >> x;
 
-	Node *temp = NULL;
-	Node *newHead = NULL;
-	while( i < n ) {
-		Node *n = new Node( head -> data );
-		if (temp == NULL) {
-			temp = n;
-			newHead = n;
+	Node *cursor = NULL, *tempHead = NULL, *tempTail = NULL, *tail = NULL;
+
+	if( x > 0 ) {
+		cursor = head;
+		head = NULL;	
+	}
+	
+	while( cursor != NULL ) {
+		Node *n = new Node( cursor -> data );
+		if (tempHead == NULL) {
+			tempHead = n;
+			tempTail = n;
 		}
-		else{
-			n -> next = temp;
-			temp = n;
-			newHead -> next = head;
+		else {
+			n -> next = tempHead;
+			tempHead = n;
 		}
 
-		head = head -> next;
+		if (i % x == 0 || cursor -> next == NULL) {
+			if (head == NULL) {
+				head = tempHead;
+			}
+
+			if (tail == NULL) {
+				tail = tempTail;
+			}
+			else {
+				tail -> next = tempHead;
+				tail = tempTail;
+			}
+
+			tempHead = NULL;
+			tempTail = NULL;
+		}
+
+		Node *delNode = cursor;
+		cursor = cursor -> next;
+		delete delNode;
 		i++;
 	}
 
-	newHead -> next = head;
-	op -> print(temp);
+	op -> print(head);
+
 }

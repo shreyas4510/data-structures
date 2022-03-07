@@ -8,60 +8,59 @@ class Pair {
 		Node *tail = NULL;
 };
 
-int main(int argc, char const *argv[])
-{
+int main() {
 	operations *op = new operations();
 	Node *head = op -> takeInput();
-	int m, n, index=0;
+
+	int m, n;
 	cin >> m >> n;
 
+	int index = 0;
+	Node *n1 = NULL, *n2 = NULL;
 	Node *temp = head;
-	Pair *p = new Pair();
-	while( temp != NULL ) {
-		if (m > 0 && n > 0) {
-			if ( index == m-1 ) {
-				p -> head = temp;
-			}
-			if ( index == n-1 ) {
-				p -> tail = temp;
-				break;
-			}
+	while( index <= n ) {
+		if ( index == m )
+			n1 = new Node( temp -> data );
+		
+		if ( index == n )
+			n2 = new Node( temp -> data );
+
+		temp = temp -> next;
+		index++;
+	}
+
+	temp = head;
+	index = 0;
+	while( index < n ) {
+
+		if (m == 0 && index == 0) {
+			Node *delNode = temp;
+			n2 -> next = temp -> next;
+			temp = n2;
+			head = n2;
+			delete delNode;
 		}
 		else {
-			if ( m == 0 && index == 0 ) {
-				p -> head = temp;
-			}
-			if ( n == 0 && index == 0) {
-				p -> tail = temp;
-				break;
+			if (index == m-1) {
+				Node *delNode = temp -> next;
+				n2 -> next = temp -> next -> next;
+				temp -> next = n2;
+				delete delNode;
 			}
 		}
-		index ++;
-		temp = temp-> next;
-	}
 
-	Node *newTemp = new Node( n == 0 ? p -> tail -> data : p -> tail -> next -> data);
-	Node *newTemp1 = new Node( m == 0 ? p -> head -> data : p -> head -> next -> data );
+		if ( index == n-1 ) {
+			Node *delNode = temp -> next;
+			n1 -> next = temp -> next -> next;
+			temp -> next = n1;
+			delete delNode;
+		}
 
-	if (m == 0)
-	{
-		newTemp -> next = p -> head -> next;
-		p -> head -> next = newTemp;
-	}
-	else {
-		newTemp -> next = p -> head -> next -> next;
-		p -> head -> next = newTemp;
-	}
-
-	if ( n ==0 ){
-		newTemp1 -> next = p -> tail -> next;
-		p -> tail -> next = newTemp1;	
-	}
-	else {	
-		newTemp1 -> next = p -> tail -> next -> next;
-		p -> tail -> next = newTemp1;			
+		temp = temp -> next;
+		index++;
 	}
 
 	op -> print(head);
+
 	return 0;
 }
