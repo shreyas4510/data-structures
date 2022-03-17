@@ -14,6 +14,11 @@ class TreeNode {
 			this -> leftNode = NULL;
 			this -> rightNode = NULL;
 		}
+
+		~TreeNode() {
+			delete this -> leftNode;
+			delete this -> rightNode;
+		}
 };
 
 template < typename type >
