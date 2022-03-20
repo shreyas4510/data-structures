@@ -28,6 +28,9 @@ class operations {
 			type input;
 			queue<TreeNode<type>*> q;
 			cin >> input;
+			if (input == -1)
+				return NULL;
+
 			TreeNode<type> *root = new TreeNode<type>(input); 
 			q.push( root );
 
@@ -51,7 +54,7 @@ class operations {
 			return root;
 		}
 
-		printLevelWise( TreeNode<type> *root ) {
+		void printLevelWise( TreeNode<type> *root ) {
 			queue<TreeNode<type>*> q;
 			q.push(root);
 
