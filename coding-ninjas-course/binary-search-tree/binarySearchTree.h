@@ -55,6 +55,10 @@ class operations {
 		}
 
 		void printLevelWise( TreeNode<type> *root ) {
+			if (!root) {
+				return;
+			}
+
 			queue<TreeNode<type>*> q;
 			q.push(root);
 
